@@ -3,8 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import Task from './Task.jsx';
-
 import QuizList from './QuizList.jsx';
 import GroupEdit from './GroupEdit';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
