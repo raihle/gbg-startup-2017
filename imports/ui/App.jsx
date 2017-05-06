@@ -34,7 +34,9 @@ class App extends Component {
         return (
             <MuiThemeProvider>
                 <div className="container">
-                    <AccountsUIWrapper />
+                    <div className="login-button-test">
+                        <AccountsUIWrapper />
+                    </div>
                     <Router history={history}>
                         <div>
                             <Route exact path='/' component={QuizList} />
