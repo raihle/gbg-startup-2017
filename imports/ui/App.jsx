@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { Tasks } from '../api/tasks.js';
 
 import Task from './Task.jsx';
+import QuizList from './QuizList.jsx';
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 class App extends Component {
 
@@ -27,6 +30,8 @@ class App extends Component {
         Tasks.insert({
             text,
             createdAt: new Date(),
+            owner: Meteor.userId(),           // _id of logged in user
+            username: Meteor.user().username,  // username of logged in user
         });
 
         this.setState({ newTaskName: '' });
@@ -53,31 +58,19 @@ class App extends Component {
     render() {
         return (
             <div className="container">
-                <header>
-                    <h1>Todo List ({this.props.incompleteTasksCount} left)</h1>
+                <AccountsUIWrapper />
 
-                    <label className="hide-completed">
-                        <input
-                            type="checkbox"
-                            checked={this.state.hideCompleted}
-                            onChange={this.toggleHideCompleted}
-                        />
-                        Hide completed tasks
-                    </label>
-
-                    <form className="new-task" onSubmit={this.handleSubmit}>
+                { this.props.currentUser ?
+                    <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
                         <input
                             type="text"
-                            placeholder="Type to add a new task"
-                            value={this.state.newTaskName}
-                            onChange={this.handleNewTaskNameChange}
+                            ref="textmeteor
+                            Input"
+                            placeholder="Type to add new tasks"
                         />
-                    </form>
-                </header>
-
-                <ul>
-                    {this.renderTasks()}
-                </ul>
+                    </form> : ''
+                }
+                <QuizList />
             </div>
         );
     }
@@ -86,11 +79,13 @@ class App extends Component {
 App.propTypes = {
     tasks: PropTypes.array.isRequired,
     incompleteTasksCount: PropTypes.number.isRequired,
-}
+    currentUser: PropTypes.object,
+};
 
 export default createContainer(() => {
     return {
         tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch(),
         incompleteTasksCount: Tasks.find({ checked: { $ne: true } }).count(),
+        currentUser: Meteor.user(),
     };
 }, App);

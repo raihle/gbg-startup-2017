@@ -1,3 +1,5 @@
-/**
- * Created by mf2878 on 2017-05-06.
- */
+import { Accounts } from 'meteor/accounts-base';
+
+Accounts.ui.config({
+    passwordSignupFields: 'USERNAME_ONLY',
+});
