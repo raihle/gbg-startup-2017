@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import Quiz from './Quiz.jsx';
+import { Quizes } from '../api/quizes.js';
 
 
 export default class QuizList extends Component {
@@ -15,12 +16,8 @@ export default class QuizList extends Component {
     }
 
     getQuizesByDate(date) {
-        if (this.isToday()) {
-            return [
-                {_id: 1, name: "Ett quiz", place: "Din mammas källare", date: "2018-12-31 13:30", groupCount: 3, quizMaster: "Din mamma"}
-            ]
-        }
-        return [];
+        let dateString = moment(date).format('YYYY-MM-DD');
+        return Quizes.find({date: {$regex: '^' + dateString}});
     }
 
     renderQuizes(quizes) {
