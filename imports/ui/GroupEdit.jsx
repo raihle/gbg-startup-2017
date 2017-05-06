@@ -6,7 +6,8 @@ import { QuizGroups } from '../api/quizgroups.js';
 import GroupMemberListEdit from './GroupMemberListEdit';
 import moment from 'moment';
 import 'react-datetime/css/react-datetime.css';
-import {DatePicker, FlatButton, RaisedButton, TextField, TimePicker} from "material-ui";
+import {AppBar, DatePicker, FlatButton, IconButton, RaisedButton, TextField, TimePicker} from "material-ui";
+import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 
 
 export default class GroupEdit extends Component {
@@ -116,6 +117,20 @@ export default class GroupEdit extends Component {
     }
 
     render() {
+        return (
+            <div>
+                <AppBar
+                    title="Quizy"
+                    titleStyle={{fontStyle: "italic"}}
+                    iconElementLeft={<IconButton><NavigationArrowBack /></IconButton>}
+                    onLeftIconButtonTouchTap={()=>window.location="/"}
+                />
+                {this.renderInner()}
+            </div>
+        );
+    }
+
+    renderInner() {
         if (this.state.created) {
             return (
                 <div className="group-edit-finished">
@@ -196,12 +211,11 @@ export default class GroupEdit extends Component {
                         fullWidth={true}
                     />
                     <GroupMemberListEdit members={this.state.groupMembers} onChange={this.handleMemberChange} />
-                    <FlatButton href="/" secondary={true} style={{float: "left"}}>
-                        <div className="button-content">AVBRYT</div>
-                    </FlatButton>
-                    <RaisedButton type="submit" primary={true} style={{float: "right"}}>
-                        <div className="button-content">SKAPA GRUPP</div>
-                    </RaisedButton>
+                    <div className="centered-button">
+                        <RaisedButton type="submit" primary={true}>
+                            <div className="button-content">SKAPA GRUPP</div>
+                        </RaisedButton>
+                    </div>
                 </form>
             </div>
         );

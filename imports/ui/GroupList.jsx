@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import Group from './Group.jsx';
 import { QuizGroups } from '../api/quizgroups.js';
+import {AppBar, IconButton} from "material-ui";
+import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 
 
 export default class GroupList extends Component {
@@ -26,7 +27,13 @@ export default class GroupList extends Component {
 
     render() {
         return (
-                <div className="container">
+                <div>
+                    <AppBar
+                        title="Quizy"
+                        titleStyle={{fontStyle: "italic"}}
+                        iconElementLeft={<IconButton><NavigationArrowBack /></IconButton>}
+                        onLeftIconButtonTouchTap={()=>window.location="/"}
+                    />
                     {this.renderGroupList()}
                 </div>
                 );

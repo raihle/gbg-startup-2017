@@ -31,33 +31,10 @@ class App extends Component {
         console.log(moment());
     }
 
-    topRightButton() {
-        if (Meteor.userId() !== null) {
-            return (
-                <FlatButton href="/createGroup">
-                    <div className="tight-button-content">Skapa grupp</div>
-                </FlatButton>
-            );
-        } else {
-            return (
-                <div className="login-button-test">
-                    <AccountsUIWrapper />
-                </div>
-            );
-        }
-    }
-
     render() {
         return (
             <MuiThemeProvider>
                 <div className="container">
-                    <AppBar
-                        title="Quizy"
-                        titleStyle={{fontStyle: "italic"}}
-                        showMenuIconButton={false}
-                        iconElementRight={this.topRightButton()}
-                    />
-
                     <Router history={history}>
                         <div>
                             <Route exact path='/' component={QuizList} />

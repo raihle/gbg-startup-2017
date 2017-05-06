@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import Quiz from './Quiz.jsx';
 import { Quizes } from '../api/quizes.js';
-import {RaisedButton} from "material-ui";
+import {AppBar, FlatButton, RaisedButton} from "material-ui";
+import AccountsUIWrapper from "./AccountsUIWrapper";
 
 
 export default class QuizList extends Component {
@@ -50,12 +51,34 @@ export default class QuizList extends Component {
         this.setState({currentDate: moment(this.state.currentDate).subtract({day: 1}).toDate()});
     }
 
+    topRightButton() {
+        if (Meteor.userId() !== null) {
+            return (
+                <FlatButton href="/createGroup">
+                    <div className="tight-button-content">Skapa grupp</div>
+                </FlatButton>
+            );
+        } else {
+            return (
+                <div className="login-button-test">
+                    <AccountsUIWrapper />
+                </div>
+            );
+        }
+    }
+
     render() {
         let tmp = Geolocation.currentLocation();
         let quizes = this.getQuizesByDate(this.state.currentDate);
 
         return (
-                <div className="container">
+                <div>
+                    <AppBar
+                        title="Quizy"
+                        titleStyle={{fontStyle: "italic"}}
+                        showMenuIconButton={false}
+                        iconElementRight={this.topRightButton()}
+                    />
                     <header>
                         {this.renderPrevious()}
                         {moment(this.state.currentDate).format('YYYY-MM-DD')}
