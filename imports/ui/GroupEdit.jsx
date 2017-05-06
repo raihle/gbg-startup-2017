@@ -7,7 +7,7 @@ import GroupMemberListEdit from './GroupMemberListEdit';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 import 'react-datetime/css/react-datetime.css';
-import {RaisedButton, TextField} from "material-ui";
+import {DatePicker, RaisedButton, TextField, TimePicker} from "material-ui";
 
 
 export default class GroupEdit extends Component {
@@ -17,7 +17,7 @@ export default class GroupEdit extends Component {
         this.state = {
             quizName: "",
             quizPlace: "",
-            quizDate: moment(),
+            quizDate: new Date(),
             quizMaster: "",
 
             groupName: "",
@@ -29,6 +29,7 @@ export default class GroupEdit extends Component {
         this.handleQuizNameChange = this.handleQuizNameChange.bind(this);
         this.handleQuizPlaceChange = this.handleQuizPlaceChange.bind(this);
         this.handleQuizDateChange = this.handleQuizDateChange.bind(this);
+        this.handleQuizTimeChange = this.handleQuizTimeChange.bind(this);
         this.handleQuizMasterChange = this.handleQuizMasterChange.bind(this);
         this.handleGroupNameChange = this.handleGroupNameChange.bind(this);
         this.handleGroupDescriptionChange = this.handleGroupDescriptionChange.bind(this);
@@ -41,7 +42,7 @@ export default class GroupEdit extends Component {
         const quiz = {
             name: this.state.quizName,
             place: this.state.quizPlace,
-            date: this.state.quizDate.format(),
+            date: moment(this.state.quizDate).format(),
             quizMaster: this.state.quizMaster
         };
 
@@ -68,9 +69,18 @@ export default class GroupEdit extends Component {
         this.setState({quizPlace: event.currentTarget.value});
     }
 
-    handleQuizDateChange(date) {
+    handleQuizDateChange(nothing, date) {
+        const newDate = moment(date);
+        newDate.hours(this.state.quizDate.getHours());
+        newDate.minutes(this.state.quizDate.getMinutes());
         if (typeof date === 'object') {
-            this.setState({quizDate: date});
+            this.setState({quizDate: newDate.toDate()});
+        }
+    }
+
+    handleQuizTimeChange(nothing, time) {
+        if (typeof date === 'object') {
+            this.setState({quizDate: time});
         }
     }
 
@@ -94,6 +104,7 @@ export default class GroupEdit extends Component {
         this.setState({groupMembers: newMembers});
     }
 
+
     render() {
         return (
             <div className="group-edit">
@@ -116,15 +127,32 @@ export default class GroupEdit extends Component {
                         value={this.state.quizPlace}
                         fullWidth={true}
                     />
-                    <label className="form-row">
-                        När är det?
+
+                    <DatePicker
+                        floatingLabelText="När är det?"
+                        fullWidth={true}
+                        locale="sv"
+                        value={this.state.quizDate}
+                        onChange={this.handleQuizDateChange}
+                        DateTimeFormat={Intl.DateTimeFormat}
+                    />
+                    <TimePicker
+                        floatingLabelText="Vilken tid?"
+                        fullWidth={true}
+                        value={this.state.quizDate}
+                        onChange={this.handleQuizTimeChange}
+                        format="24hr"
+                    />
+                        {/*<label className="form-row">
+                         När är det?
                         <div className="full-input">
                             <Datetime
                                 value={this.state.quizDate}
                                 onChange={this.handleQuizDateChange}
                             />
                         </div>
-                    </label>
+                         </label>*/}
+
                     <TextField
                         floatingLabelText="Vem är QuizMaster?"
                         onChange={this.handleQuizMasterChange}
