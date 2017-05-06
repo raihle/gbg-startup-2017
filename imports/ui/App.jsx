@@ -60,16 +60,6 @@ class App extends Component {
             <div className="container">
                 <AccountsUIWrapper />
 
-                { this.props.currentUser ?
-                    <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
-                        <input
-                            type="text"
-                            ref="textmeteor
-                            Input"
-                            placeholder="Type to add new tasks"
-                        />
-                    </form> : ''
-                }
                 <QuizList />
             </div>
         );
