@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { Quizes } from '../api/quizes.js';
 import { QuizGroups } from '../api/quizgroups.js';
+
+import GroupMemberListEdit from './GroupMemberListEdit';
 
 export default class GroupEdit extends Component {
 
@@ -17,7 +18,8 @@ export default class GroupEdit extends Component {
 
             groupName: "",
             groupDescription: "",
-            groupMaxMemberCount: "",
+            groupMissingMemberCount: "",
+            groupMembers: []
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleQuizNameChange = this.handleQuizNameChange.bind(this);
@@ -26,7 +28,8 @@ export default class GroupEdit extends Component {
         this.handleQuizMasterChange = this.handleQuizMasterChange.bind(this);
         this.handleGroupNameChange = this.handleGroupNameChange.bind(this);
         this.handleGroupDescriptionChange = this.handleGroupDescriptionChange.bind(this);
-        this.handleGroupMaxMemberCountChange = this.handleGroupMaxMemberCountChange.bind(this);
+        this.handleGroupMissingMemberCountChange = this.handleGroupMissingMemberCountChange.bind(this);
+        this.handleMemberChange = this.handleMemberChange.bind(this);
     }
 
     handleSubmit(event) {
@@ -41,8 +44,10 @@ export default class GroupEdit extends Component {
         const group = {
             name: this.state.groupName,
             description: this.state.groupDescription,
-            maxMemberCount: this.state.groupMaxMemberCount,
-            ownerId: Meteor.userId()
+            missingMemberCount: this.state.groupMissingMemberCount,
+            ownerId: Meteor.userId(),
+            members: [],
+            outsideMembers: this.state.groupMembers
         };
 
         console.log('Submitting!');
@@ -74,8 +79,12 @@ export default class GroupEdit extends Component {
         this.setState({groupDescription: event.currentTarget.value});
     }
 
-    handleGroupMaxMemberCountChange(event) {
-        this.setState({groupMaxMemberCount: event.currentTarget.value});
+    handleGroupMissingMemberCountChange(event) {
+        this.setState({groupMissingMemberCount: event.currentTarget.value});
+    }
+
+    handleMemberChange(newMembers) {
+        this.setState({groupMembers: newMembers});
     }
 
     render() {
@@ -124,12 +133,16 @@ export default class GroupEdit extends Component {
                             onChange={this.handleGroupNameChange}
                         />
                     </label>
+                    <div>
+                        Vilka andra är redan med i gruppen?
+                        <GroupMemberListEdit members={this.state.groupMembers} onChange={this.handleMemberChange} />
+                    </div>
                     <label>
-                        Hur många vill ni bli?
+                        Hur många fler söker ni?
                         <input
                             type="number"
-                            value={this.state.groupMaxMemberCount}
-                            onChange={this.handleGroupMaxMemberCountChange}
+                            value={this.state.groupMissingMemberCount}
+                            onChange={this.handleGroupMissingMemberCountChange}
                         />
                     </label>
                     <label>
