@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
+import {FlatButton, IconButton, TextField} from "material-ui";
 
 export default class GroupMemberListEdit extends Component {
 
@@ -42,13 +43,13 @@ export default class GroupMemberListEdit extends Component {
             const deleteListener = (event) => this.handleDeleteRow(event, myIndex);
             return (
                 <li key={myIndex}>
-                    <input
-                        placeholder="Namn"
-                        type="text"
+                    <h3>Deltagare #{myIndex + 2}</h3>
+                    <TextField
+                        floatingLabelText="Namn"
                         value={member.name}
                         onChange={changeListener}
                     />
-                    <button type="button" onClick={deleteListener}>&times;</button>
+                    <FlatButton secondary={true} onClick={deleteListener}>&times;</FlatButton>
                 </li>
             );
         });
@@ -58,9 +59,17 @@ export default class GroupMemberListEdit extends Component {
         return (
             <div className="group-preexisting-member">
                 <ul>
+                    <li key={-1}>
+                        <h3>Deltagare #1</h3>
+                        <TextField
+                            floatingLabelText="Namn"
+                            value="Jag själv"
+                            disabled={true}
+                        />
+                    </li>
                     {this.renderMembers()}
                 </ul>
-                <button type="button" onClick={this.handleNewRow}>Ny medlem</button>
+                <FlatButton primary={true} onTouchTap={this.handleNewRow}> + Lägg till deltagare </FlatButton>
             </div>
         );
     }

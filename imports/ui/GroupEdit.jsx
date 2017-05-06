@@ -7,6 +7,8 @@ import GroupMemberListEdit from './GroupMemberListEdit';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 import 'react-datetime/css/react-datetime.css';
+import {RaisedButton, TextField} from "material-ui";
+
 
 export default class GroupEdit extends Component {
 
@@ -102,24 +104,18 @@ export default class GroupEdit extends Component {
                 </ul>
                 <h1>Skapa en grupp</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <label className="form-row">
-                        Vad heter quizet?
-                        <input
-                            className="full-input"
-                            type="text"
-                            value={this.state.quizName}
-                            onChange={this.handleQuizNameChange}
-                        />
-                    </label>
-                    <label className="form-row">
-                        Var ligger det?
-                        <input
-                            className="full-input"
-                            type="text"
-                            value={this.state.quizPlace}
-                            onChange={this.handleQuizPlaceChange}
-                        />
-                    </label>
+                    <TextField
+                        floatingLabelText="Vad heter quizet?"
+                        onChange={this.handleQuizNameChange}
+                        value={this.state.quizName}
+                        fullWidth={true}
+                    />
+                    <TextField
+                        floatingLabelText="Var ligger det?"
+                        onChange={this.handleQuizPlaceChange}
+                        value={this.state.quizPlace}
+                        fullWidth={true}
+                    />
                     <label className="form-row">
                         När är det?
                         <div className="full-input">
@@ -129,53 +125,38 @@ export default class GroupEdit extends Component {
                             />
                         </div>
                     </label>
-                    <label className="form-row">
-                        Vem är QuizMaster?
-                        <input
-                            className="full-input"
-                            type="text"
-                            value={this.state.quizMaster}
-                            onChange={this.handleQuizMasterChange}
-                        />
-                    </label>
-                    <hr />
-                    <label className="form-row">
-                        Vad heter din grupp?
-                        <input
-                            className="full-input"
-                            type="text"
-                            value={this.state.groupName}
-                            onChange={this.handleGroupNameChange}
-                        />
-                    </label>
-                    <div className="form-row">
-                        Vilka andra är redan med i gruppen?
-                        <GroupMemberListEdit members={this.state.groupMembers} onChange={this.handleMemberChange} />
-                    </div>
-                    <label className="form-row">
-                        Hur många fler söker ni?
-                        <input
-                            className="full-input"
-                            type="number"
-                            value={this.state.groupMissingMemberCount}
-                            onChange={this.handleGroupMissingMemberCountChange}
-                        />
-                    </label>
-                    <label className="form-row">
-                        Skriv lite mer om er själva!
-                        <textarea
-                            className="full-input"
-                            rows="4"
-                            type="text"
-                            value={this.state.groupDescription}
-                            onChange={this.handleGroupDescriptionChange}
-                        />
-                    </label>
-                    <div className="form-row">
-                        <button type="submit">
-                            Skapa!
-                        </button>
-                    </div>
+                    <TextField
+                        floatingLabelText="Vem är QuizMaster?"
+                        onChange={this.handleQuizMasterChange}
+                        value={this.state.quizMaster}
+                        fullWidth={true}
+                    />
+                    <TextField
+                        floatingLabelText="Vad heter din grupp?"
+                        onChange={this.handleGroupNameChange}
+                        value={this.state.groupName}
+                        fullWidth={true}
+                    />
+                    <TextField
+                        floatingLabelText="Hur många fler söker ni?"
+                        type="number"
+                        onChange={this.handleGroupMissingMemberCountChange}
+                        value={this.state.groupMissingMemberCount}
+                        fullWidth={true}
+                    />
+                    <TextField
+                        floatingLabelText="Skriv lite mer om er själva!"
+                        multiLine={true}
+                        rowsMax={10}
+                        rows={3}
+                        onChange={this.handleGroupDescriptionChange}
+                        value={this.state.groupDescription}
+                        fullWidth={true}
+                    />
+                    <GroupMemberListEdit members={this.state.groupMembers} onChange={this.handleMemberChange} />
+                    <RaisedButton type="submit">
+                        Skapa!
+                    </RaisedButton>
                 </form>
             </div>
         );
