@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
-import {FlatButton, IconButton, TextField} from "material-ui";
+import {FlatButton, TextField} from "material-ui";
 
 export default class GroupMemberListEdit extends Component {
 
@@ -43,7 +43,7 @@ export default class GroupMemberListEdit extends Component {
             const deleteListener = (event) => this.handleDeleteRow(event, myIndex);
             return (
                 <li key={myIndex}>
-                    <h3>Deltagare #{myIndex + 2}</h3>
+                    <h3 className="member-heading">Deltagare #{myIndex + 2}</h3>
                     <TextField
                         floatingLabelText="Namn"
                         value={member.name}
@@ -62,7 +62,7 @@ export default class GroupMemberListEdit extends Component {
             <div className="group-preexisting-member">
                 <ul>
                     <li key={-1}>
-                        <h3>Deltagare #1</h3>
+                        <h3 className="member-heading">Deltagare #1</h3>
                         <TextField
                             floatingLabelText="Namn"
                             value="Jag själv"

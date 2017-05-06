@@ -15,7 +15,7 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 import createBrowserHistory from 'history/createBrowserHistory';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import {AppBar} from "material-ui";
+import {AppBar, FlatButton } from "material-ui";
 
 // Needed for onTouchTap in Material UI
 // http://stackoverflow.com/a/34015469/988941
@@ -31,6 +31,22 @@ class App extends Component {
         console.log(moment());
     }
 
+    topRightButton() {
+        if (Meteor.userId() !== null) {
+            return (
+                <FlatButton href="/createGroup">
+                    <div className="tight-button-content">Skapa grupp</div>
+                </FlatButton>
+            );
+        } else {
+            return (
+                <div className="login-button-test">
+                    <AccountsUIWrapper />
+                </div>
+            );
+        }
+    }
+
     render() {
         return (
             <MuiThemeProvider>
@@ -39,10 +55,9 @@ class App extends Component {
                         title="Quizy"
                         titleStyle={{fontStyle: "italic"}}
                         showMenuIconButton={false}
+                        iconElementRight={this.topRightButton()}
                     />
-                    <div className="login-button-test">
-                        <AccountsUIWrapper />
-                    </div>
+
                     <Router history={history}>
                         <div>
                             <Route exact path='/' component={QuizList} />

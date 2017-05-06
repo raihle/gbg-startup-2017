@@ -13,3 +13,8 @@
 .group-preexisting-member {
     margin-bottom: 1rem;
 }
+
+.member-heading {
+    margin-top: 1rem;
+    margin-bottom: -.5rem;
+}

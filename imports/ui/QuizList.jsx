@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import Quiz from './Quiz.jsx';
 import { Quizes } from '../api/quizes.js';
+import {RaisedButton} from "material-ui";
 
 
 export default class QuizList extends Component {
@@ -30,7 +31,11 @@ export default class QuizList extends Component {
     }
 
     renderPrevious() {
-        return this.isToday() || (<button onClick={this.previousDay}>&lt;-</button>)
+        if (this.isToday()) {
+            return <RaisedButton disabled={true}>&lt;-</RaisedButton>;
+        } else {
+            return <RaisedButton onClick={this.previousDay}>&lt;-</RaisedButton>;
+        }
     }
 
     isToday() {
@@ -54,13 +59,8 @@ export default class QuizList extends Component {
                     <header>
                         {this.renderPrevious()}
                         {moment(this.state.currentDate).format('YYYY-MM-DD')}
-                        <button onClick={this.nextDay}>-&gt;</button>
+                        <RaisedButton onClick={this.nextDay}>-&gt;</RaisedButton>
                     </header>
-                    <ul>
-                        <li>
-                            <a href="/createGroup">Skapa grupp</a>
-                        </li>
-                    </ul>
                     <ul>
                         {this.renderQuizes(quizes)}
                     </ul>
