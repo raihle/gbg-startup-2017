@@ -30,8 +30,8 @@ class App extends Component {
         Tasks.insert({
             text,
             createdAt: new Date(),
-            owner: Meteor.userId(),           // _id of logged in user
-            username: Meteor.user().username,  // username of logged in user
+            owner: Meteor.userId(),
+            username: Meteor.user().username,
         });
 
         this.setState({ newTaskName: '' });
