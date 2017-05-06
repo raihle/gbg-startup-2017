@@ -67,7 +67,9 @@ export default class GroupEdit extends Component {
     }
 
     handleQuizDateChange(date) {
-        this.setState({quizDate: date});
+        if (typeof date === 'object') {
+            this.setState({quizDate: date});
+        }
     }
 
     handleQuizMasterChange(event) {
@@ -121,18 +123,11 @@ export default class GroupEdit extends Component {
                     <label className="form-row">
                         När är det?
                         <div className="full-input">
-                            {/*<DatePicker
-                                selected={this.state.quizDate}
+                            <Datetime
+                                value={this.state.quizDate}
                                 onChange={this.handleQuizDateChange}
-                            />*/}
-                            <Datetime />;
+                            />
                         </div>
-                        {/*<input
-                            className="full-input"
-                            type="text"
-                            value={this.state.quizDate}
-                            onChange={this.handleQuizDateChange}
-                        />*/}
                     </label>
                     <label className="form-row">
                         Vem är QuizMaster?
