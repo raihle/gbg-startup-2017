@@ -1,0 +1,16 @@
+.group-edit {
+
+}
+
+.group-edit form {
+    padding: 1rem;
+}
+
+.group-edit label {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.group-edit input, .group-edit textarea {
+    display: block;
+}

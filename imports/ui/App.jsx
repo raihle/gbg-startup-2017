@@ -3,56 +3,17 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Tasks } from '../api/tasks.js';
-
 import Task from './Task.jsx';
+
 import QuizList from './QuizList.jsx';
+import GroupEdit from './GroupEdit';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            newTaskName: '',
-            hideCompleted: false,
-        };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleNewTaskNameChange = this.handleNewTaskNameChange.bind(this);
-        this.toggleHideCompleted = this.toggleHideCompleted.bind(this);
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-
-        const text = this.state.newTaskName.trim();
-
-        Tasks.insert({
-            text,
-            createdAt: new Date(),
-            owner: Meteor.userId(),           // _id of logged in user
-            username: Meteor.user().username,  // username of logged in user
-        });
-
-        this.setState({ newTaskName: '' });
-    }
-
-    handleNewTaskNameChange(event) {
-        this.setState({ newTaskName: event.currentTarget.value });
-    }
-
-    toggleHideCompleted() {
-        this.setState({ hideCompleted: !this.state.hideCompleted });
-    }
-
-    renderTasks() {
-        let filteredTasks = this.props.tasks;
-        if (this.state.hideCompleted) {
-            filteredTasks = filteredTasks.filter((task) => !task.checked);
-        }
-        return filteredTasks.map((task) => (
-            <Task key={task._id} task={task} />
-        ));
+        this.state = {};
     }
 
     render() {
@@ -61,21 +22,19 @@ class App extends Component {
                 <AccountsUIWrapper />
 
                 <QuizList />
+
+                <GroupEdit />
             </div>
         );
     }
 }
 
 App.propTypes = {
-    tasks: PropTypes.array.isRequired,
-    incompleteTasksCount: PropTypes.number.isRequired,
     currentUser: PropTypes.object,
 };
 
 export default createContainer(() => {
     return {
-        tasks: Tasks.find({}, { sort: { createdAt: -1 } }).fetch(),
-        incompleteTasksCount: Tasks.find({ checked: { $ne: true } }).count(),
         currentUser: Meteor.user(),
     };
 }, App);
