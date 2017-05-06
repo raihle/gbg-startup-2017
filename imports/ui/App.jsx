@@ -33,10 +33,12 @@ class App extends Component {
 
     render() {
         return (
-            <MuiThemeProvider >
+            <MuiThemeProvider>
                 <div className="container">
                     <AppBar title="Quizy" titleStyle={{fontStyle: "italic"}}/>
-                    <AccountsUIWrapper />
+                    <div className="login-button-test">
+                        <AccountsUIWrapper />
+                    </div>
                     <Router history={history}>
                         <div>
                             <Route exact path='/' component={QuizList} />
