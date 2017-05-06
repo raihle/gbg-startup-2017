@@ -19,7 +19,7 @@ body {
 }
 
 .container {
-    max-width: 50rem;
+    max-width: 30rem;
     margin: 0 auto;
     min-height: 100%;
     background: white;

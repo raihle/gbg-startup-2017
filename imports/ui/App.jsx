@@ -35,7 +35,11 @@ class App extends Component {
         return (
             <MuiThemeProvider>
                 <div className="container">
-                    <AppBar title="Quizy" titleStyle={{fontStyle: "italic"}}/>
+                    <AppBar
+                        title="Quizy"
+                        titleStyle={{fontStyle: "italic"}}
+                        showMenuIconButton={false}
+                    />
                     <div className="login-button-test">
                         <AccountsUIWrapper />
                     </div>
