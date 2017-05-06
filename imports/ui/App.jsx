@@ -6,6 +6,7 @@ import moment from 'moment';
 import 'moment/locale/sv';
 
 import QuizList from './QuizList.jsx';
+import GroupList from './GroupList.jsx';
 import GroupEdit from './GroupEdit';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
@@ -29,6 +30,7 @@ class App extends Component {
                     <Router history={history}>
                         <div>
                             <Route exact path='/' component={QuizList} />
+                            <Route exact path='/quiz/:id' component={GroupList} />
                             <Route exact path='/createGroup' component={GroupEdit} />
                         </div>
                     </Router>

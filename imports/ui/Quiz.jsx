@@ -12,12 +12,13 @@ export default class Quiz extends Component {
 
     goTo() {
         console.log(this.props.quiz._id);
+
     }
 
     render() {
         return (
                 <li className="quiz">
-                    <a href="#" onClick={this.goTo}>{this.props.quiz.name} - {this.props.quiz.place}</a>
+                    <a href={"/quiz/" + this.props.quiz._id}>{this.props.quiz.name} - {this.props.quiz.place}</a>
                     <h3>{this.props.quiz.quizMaster}</h3>
                     <p>{this.props.quiz.groupCount} grupper</p>
                 </li>
