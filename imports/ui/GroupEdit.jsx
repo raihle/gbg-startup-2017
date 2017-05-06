@@ -50,9 +50,10 @@ export default class GroupEdit extends Component {
             outsideMembers: this.state.groupMembers
         };
 
-        console.log('Submitting!');
         group.quizId = Quizes.insert(quiz);
         QuizGroups.insert(group);
+
+        window.location= '/';
     }
 
     handleQuizNameChange(event) {
@@ -90,73 +91,87 @@ export default class GroupEdit extends Component {
     render() {
         return (
             <div className="group-edit">
+                <ul>
+                    <li>
+                        <a href="/">Tillbaka</a>
+                    </li>
+                </ul>
                 <h1>Skapa en grupp</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <label>
+                    <label className="form-row">
                         Vad heter quizet?
                         <input
+                            className="full-input"
                             type="text"
                             value={this.state.quizName}
                             onChange={this.handleQuizNameChange}
                         />
                     </label>
-                    <label>
+                    <label className="form-row">
                         Var ligger det?
                         <input
+                            className="full-input"
                             type="text"
                             value={this.state.quizPlace}
                             onChange={this.handleQuizPlaceChange}
                         />
                     </label>
-                    <label>
+                    <label className="form-row">
                         När är det?
                         <input
+                            className="full-input"
                             type="text"
                             value={this.state.quizDate}
                             onChange={this.handleQuizDateChange}
                         />
                     </label>
-                    <label>
+                    <label className="form-row">
                         Vem är QuizMaster?
                         <input
+                            className="full-input"
                             type="text"
                             value={this.state.quizMaster}
                             onChange={this.handleQuizMasterChange}
                         />
                     </label>
                     <hr />
-                    <label>
+                    <label className="form-row">
                         Vad heter din grupp?
                         <input
+                            className="full-input"
                             type="text"
                             value={this.state.groupName}
                             onChange={this.handleGroupNameChange}
                         />
                     </label>
-                    <div>
+                    <div className="form-row">
                         Vilka andra är redan med i gruppen?
                         <GroupMemberListEdit members={this.state.groupMembers} onChange={this.handleMemberChange} />
                     </div>
-                    <label>
+                    <label className="form-row">
                         Hur många fler söker ni?
                         <input
+                            className="full-input"
                             type="number"
                             value={this.state.groupMissingMemberCount}
                             onChange={this.handleGroupMissingMemberCountChange}
                         />
                     </label>
-                    <label>
+                    <label className="form-row">
                         Skriv lite mer om er själva!
                         <textarea
+                            className="full-input"
                             rows="4"
                             type="text"
                             value={this.state.groupDescription}
                             onChange={this.handleGroupDescriptionChange}
                         />
                     </label>
-                    <button type="submit">
-                        Skapa!
-                    </button>
+                    <div className="form-row">
+                        <button type="submit">
+                            Skapa!
+                        </button>
+                    </div>
                 </form>
             </div>
         );

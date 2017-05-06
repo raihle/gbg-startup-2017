@@ -57,6 +57,11 @@ export default class QuizList extends Component {
                         <button onClick={this.nextDay}>-&gt;</button>
                     </header>
                     <ul>
+                        <li>
+                            <a href="/createGroup">Skapa grupp</a>
+                        </li>
+                    </ul>
+                    <ul>
                         {this.renderQuizes(quizes)}
                     </ul>
                 </div>
