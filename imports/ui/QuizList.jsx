@@ -21,7 +21,7 @@ export default class QuizList extends Component {
     }
 
     renderQuizes(quizes) {
-        if (quizes.length === 0) {
+        if (!quizes.length) {
             return (<p>Tyvärr ingen quiz idag</p>);
         }
         return quizes.map((quiz) => (
