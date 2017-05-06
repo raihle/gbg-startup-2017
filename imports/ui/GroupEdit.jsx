@@ -8,9 +8,10 @@ import moment from 'moment';
 import 'react-datetime/css/react-datetime.css';
 import {AppBar, DatePicker, FlatButton, IconButton, RaisedButton, TextField, TimePicker} from "material-ui";
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import { createContainer } from 'meteor/react-meteor-data';
 
 
-export default class GroupEdit extends Component {
+class GroupEdit extends Component {
 
     constructor(props) {
         super(props);
@@ -43,12 +44,7 @@ export default class GroupEdit extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const quiz = {
-            name: this.state.quizName,
-            place: this.state.quizPlace,
-            date: moment(this.state.quizDate).format(),
-            quizMaster: this.state.quizMaster
-        };
+        const match = this.props.quizes.find((quiz) => quiz.name === this.state.quizName);
 
         const group = {
             name: this.state.groupName,
@@ -59,14 +55,36 @@ export default class GroupEdit extends Component {
             outsideMembers: this.state.groupMembers
         };
 
-        group.quizId = Quizes.insert(quiz);
+        if (!match) {
+            const quiz = {
+                name: this.state.quizName,
+                place: this.state.quizPlace,
+                date: moment(this.state.quizDate).format(),
+                quizMaster: this.state.quizMaster
+            };
+            group.quizId = Quizes.insert(quiz);
+        } else {
+            group.quizId = match._id;
+        }
         QuizGroups.insert(group);
 
         this.setState({created: true});
     }
 
     handleQuizNameChange(event) {
-        this.setState({quizName: event.currentTarget.value});
+        const newName = event.currentTarget.value;
+        const match = this.props.quizes.find((quiz) => quiz.name === newName);
+        console.log("match found", match);
+        if (match) {
+            this.setState({
+                quizName: newName,
+                quizMaster: match.quizMaster,
+                quizPlace: match.place,
+                quizDate: moment(match.date).toDate()
+            });
+        } else {
+            this.setState({quizName: newName});
+        }
     }
 
     handleQuizPlaceChange(event) {
@@ -75,8 +93,8 @@ export default class GroupEdit extends Component {
 
     handleQuizDateChange(nothing, date) {
         const newDate = moment(date);
-        newDate.hours(this.state.quizDate.getHours());
-        newDate.minutes(this.state.quizDate.getMinutes());
+        newDate.hours(this.state.quizDate ? this.state.quizDate.getHours() : 0);
+        newDate.minutes(this.state.quizDate ? this.state.quizDate.getMinutes() : 0);
         if (typeof date === 'object') {
             this.setState({quizDate: newDate.toDate()});
         }
@@ -117,6 +135,7 @@ export default class GroupEdit extends Component {
     }
 
     render() {
+        console.log(this.props.quizes);
         return (
             <div>
                 <AppBar
@@ -223,8 +242,16 @@ export default class GroupEdit extends Component {
 }
 
 GroupEdit.propTypes = {
-    group: PropTypes.object,
+    group: PropTypes.object
 };
+
+export default createContainer(() => {
+    return {
+        group: {},
+        quizes: Quizes.find({}).fetch(),
+        currentUser: Meteor.user(),
+    };
+}, GroupEdit);
 
 /*
  name: PropTypes.string.isRequired,
