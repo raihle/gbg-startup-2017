@@ -3,8 +3,10 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { Quizes } from '../api/quizes.js';
 import { QuizGroups } from '../api/quizgroups.js';
-
 import GroupMemberListEdit from './GroupMemberListEdit';
+import Datetime from 'react-datetime';
+import moment from 'moment';
+import 'react-datetime/css/react-datetime.css';
 
 export default class GroupEdit extends Component {
 
@@ -13,7 +15,7 @@ export default class GroupEdit extends Component {
         this.state = {
             quizName: "",
             quizPlace: "",
-            quizDate: "",
+            quizDate: moment(),
             quizMaster: "",
 
             groupName: "",
@@ -37,7 +39,7 @@ export default class GroupEdit extends Component {
         const quiz = {
             name: this.state.quizName,
             place: this.state.quizPlace,
-            date: this.state.quizDate,
+            date: this.state.quizDate.format(),
             quizMaster: this.state.quizMaster
         };
 
@@ -64,8 +66,8 @@ export default class GroupEdit extends Component {
         this.setState({quizPlace: event.currentTarget.value});
     }
 
-    handleQuizDateChange(event) {
-        this.setState({quizDate: event.currentTarget.value});
+    handleQuizDateChange(date) {
+        this.setState({quizDate: date});
     }
 
     handleQuizMasterChange(event) {
@@ -118,12 +120,19 @@ export default class GroupEdit extends Component {
                     </label>
                     <label className="form-row">
                         När är det?
-                        <input
+                        <div className="full-input">
+                            {/*<DatePicker
+                                selected={this.state.quizDate}
+                                onChange={this.handleQuizDateChange}
+                            />*/}
+                            <Datetime />;
+                        </div>
+                        {/*<input
                             className="full-input"
                             type="text"
                             value={this.state.quizDate}
                             onChange={this.handleQuizDateChange}
-                        />
+                        />*/}
                     </label>
                     <label className="form-row">
                         Vem är QuizMaster?

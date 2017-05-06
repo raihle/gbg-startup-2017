@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { createContainer } from 'meteor/react-meteor-data';
+import moment from 'moment';
+import 'moment/locale/sv';
 
 import QuizList from './QuizList.jsx';
 import GroupEdit from './GroupEdit';
@@ -16,6 +18,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+        console.log(moment.locale('sv'));
+        console.log(moment());
     }
 
     render() {
