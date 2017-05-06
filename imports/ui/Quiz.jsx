@@ -7,17 +7,21 @@ export default class Quiz extends Component {
 
     constructor(props) {
         super(props);
+        this.goTo = this.goTo.bind(this);
+    }
+
+    goTo() {
+        console.log(this.props.quiz._id);
     }
 
     render() {
         return (
-            <li className="quiz">
-                <h1>{this.props.quiz.name} - {this.props.quiz.place}</h1>
-                <h2>{moment(this.props.quiz.date).format('YYYY-MM-DD hh:mm')}</h2>
-                <h3>{this.props.quiz.quizMaster}</h3>
-                <p>{this.props.quiz.groupCount} grupper</p>
-            </li>
-        );
+                <li className="quiz">
+                    <a href="#" onClick={this.goTo}>{this.props.quiz.name} - {this.props.quiz.place}</a>
+                    <h3>{this.props.quiz.quizMaster}</h3>
+                    <p>{this.props.quiz.groupCount} grupper</p>
+                </li>
+                );
     }
 }
 

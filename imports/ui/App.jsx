@@ -7,6 +7,10 @@ import QuizList from './QuizList.jsx';
 import GroupEdit from './GroupEdit';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
+import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
+import createBrowserHistory from 'history/createBrowserHistory';
+const history = createBrowserHistory();
+
 class App extends Component {
 
     constructor(props) {
@@ -16,14 +20,16 @@ class App extends Component {
 
     render() {
         return (
-            <div className="container">
-                <AccountsUIWrapper />
-
-                <QuizList />
-
-                <GroupEdit />
-            </div>
-        );
+                <div className="container">
+                    <AccountsUIWrapper />
+                    <Router history={history}>
+                        <div>
+                            <Route exact path='/' component={QuizList} />
+                            <Route exact path='/createGroup' component={GroupEdit} />
+                        </div>
+                    </Router>
+                </div>
+                );
     }
 }
 

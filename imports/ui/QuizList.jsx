@@ -48,7 +48,6 @@ export default class QuizList extends Component {
     render() {
         let tmp = Geolocation.currentLocation();
         let quizes = this.getQuizesByDate(this.state.currentDate);
-//        console.log(tmp);
 
         return (
                 <div className="container">

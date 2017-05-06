@@ -13,5 +13,8 @@
     "react-addons-pure-render-mixin": "^15.5.2",
     "react-dom": "^15.5.4",
     "react-prop-types": "^0.4.0"
+  },
+  "devDependencies": {
+    "react-router": "^4.1.1"
   }
 }
