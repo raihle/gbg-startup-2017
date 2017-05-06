@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-//import Quiz from './Quiz.jsx';
+import Group from './Group.jsx';
 import { QuizGroups } from '../api/quizgroups.js';
 
 
@@ -10,11 +10,24 @@ export default class GroupList extends Component {
         super(props);
     }
 
+    getQuizgroupsById(id) {
+        return QuizGroups.find({quizId: id});
+        ;
+    }
+
+    renderGroupList() {
+        console.log(this.props);
+        let groups = this.getQuizgroupsById(this.props.match.params.id);
+
+        return groups.map((group) => (
+                    <Group key={group._id} group={group} />
+                    ));
+    }
+
     render() {
-        console.log(this.props.match);
         return (
                 <div className="container">
-                group
+                    {this.renderGroupList()}
                 </div>
                 );
     }
