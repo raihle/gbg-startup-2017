@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import { Quizes } from '../api/quizes.js';
 import { QuizGroups } from '../api/quizgroups.js';
 import GroupMemberListEdit from './GroupMemberListEdit';
-import Datetime from 'react-datetime';
 import moment from 'moment';
 import 'react-datetime/css/react-datetime.css';
-import {DatePicker, RaisedButton, TextField, TimePicker} from "material-ui";
+import {DatePicker, FlatButton, RaisedButton, TextField, TimePicker} from "material-ui";
 
 
 export default class GroupEdit extends Component {
@@ -23,7 +22,9 @@ export default class GroupEdit extends Component {
             groupName: "",
             groupDescription: "",
             groupMissingMemberCount: "",
-            groupMembers: []
+            groupMembers: [],
+
+            created: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleQuizNameChange = this.handleQuizNameChange.bind(this);
@@ -35,6 +36,8 @@ export default class GroupEdit extends Component {
         this.handleGroupDescriptionChange = this.handleGroupDescriptionChange.bind(this);
         this.handleGroupMissingMemberCountChange = this.handleGroupMissingMemberCountChange.bind(this);
         this.handleMemberChange = this.handleMemberChange.bind(this);
+        this.handleShowGroup = this.handleShowGroup.bind(this);
+        this.handleBack = this.handleBack.bind(this);
     }
 
     handleSubmit(event) {
@@ -58,7 +61,7 @@ export default class GroupEdit extends Component {
         group.quizId = Quizes.insert(quiz);
         QuizGroups.insert(group);
 
-        window.location= '/';
+        this.setState({created: true});
     }
 
     handleQuizNameChange(event) {
@@ -104,15 +107,36 @@ export default class GroupEdit extends Component {
         this.setState({groupMembers: newMembers});
     }
 
+    handleShowGroup(event) {
+        window.location = '/';
+    }
+
+    handleBack(event) {
+        window.location= '/';
+    }
 
     render() {
+        if (this.state.created) {
+            return (
+                <div className="group-edit-finished">
+                    <h1 className="centered-text">High five!</h1>
+                    <p className="centered-text">Din grupp har skapats och andra användare kan nu se den. Ni får en notis om någon vill gå med!</p>
+                    <div className="centered-button">
+                        <RaisedButton onTouchTap={this.handleShowGroup} primary={true}>
+                            <div className="button-content">Se din grupp</div>
+                        </RaisedButton>
+                    </div>
+
+                    <div className="centered-button">
+                        <RaisedButton onTouchTap={this.handleBack} secondary={true}>
+                            <div className="button-content">Tillbaka till quiz-listan</div>
+                        </RaisedButton>
+                    </div>
+                </div>
+            );
+        }
         return (
             <div className="group-edit">
-                <ul>
-                    <li>
-                        <a href="/">Tillbaka</a>
-                    </li>
-                </ul>
                 <h1>Skapa en grupp</h1>
                 <form onSubmit={this.handleSubmit}>
                     <TextField
@@ -143,16 +167,6 @@ export default class GroupEdit extends Component {
                         onChange={this.handleQuizTimeChange}
                         format="24hr"
                     />
-                        {/*<label className="form-row">
-                         När är det?
-                        <div className="full-input">
-                            <Datetime
-                                value={this.state.quizDate}
-                                onChange={this.handleQuizDateChange}
-                            />
-                        </div>
-                         </label>*/}
-
                     <TextField
                         floatingLabelText="Vem är QuizMaster?"
                         onChange={this.handleQuizMasterChange}
@@ -182,8 +196,11 @@ export default class GroupEdit extends Component {
                         fullWidth={true}
                     />
                     <GroupMemberListEdit members={this.state.groupMembers} onChange={this.handleMemberChange} />
-                    <RaisedButton type="submit">
-                        Skapa!
+                    <FlatButton href="/" secondary={true} style={{float: "left"}}>
+                        <div className="button-content">AVBRYT</div>
+                    </FlatButton>
+                    <RaisedButton type="submit" primary={true} style={{float: "right"}}>
+                        <div className="button-content">SKAPA GRUPP</div>
                     </RaisedButton>
                 </form>
             </div>

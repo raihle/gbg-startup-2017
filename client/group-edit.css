@@ -1,12 +1,15 @@
-.group-edit {
+.group-edit, .group-edit-finished {
     padding: 1rem;
 }
 
-.group-edit .form-row {
+.group-edit::before, .group-edit::after {
+    position: relative;
+    overflow: hidden;
+    content: '';
+    clear: both;
     display: block;
-    margin-bottom: 1rem;
 }
 
-.group-edit .full-input {
-    display: block;
+.group-preexisting-member {
+    margin-bottom: 1rem;
 }

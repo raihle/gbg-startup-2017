@@ -15,6 +15,7 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 import createBrowserHistory from 'history/createBrowserHistory';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import {AppBar} from "material-ui";
 
 // Needed for onTouchTap in Material UI
 // http://stackoverflow.com/a/34015469/988941
@@ -32,8 +33,9 @@ class App extends Component {
 
     render() {
         return (
-            <MuiThemeProvider>
+            <MuiThemeProvider >
                 <div className="container">
+                    <AppBar title="Quizy" titleStyle={{fontStyle: "italic"}}/>
                     <AccountsUIWrapper />
                     <Router history={history}>
                         <div>

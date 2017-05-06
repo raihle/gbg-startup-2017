@@ -49,7 +49,9 @@ export default class GroupMemberListEdit extends Component {
                         value={member.name}
                         onChange={changeListener}
                     />
-                    <FlatButton secondary={true} onClick={deleteListener}>&times;</FlatButton>
+                    <FlatButton secondary={true} onClick={deleteListener}>
+                        <div className="button-content">&times;</div>
+                    </FlatButton>
                 </li>
             );
         });
@@ -69,7 +71,9 @@ export default class GroupMemberListEdit extends Component {
                     </li>
                     {this.renderMembers()}
                 </ul>
-                <FlatButton primary={true} onTouchTap={this.handleNewRow}> + Lägg till deltagare </FlatButton>
+                <FlatButton primary={true} onTouchTap={this.handleNewRow}>
+                    <div className="button-content">+ Lägg till deltagare</div>
+                </FlatButton>
             </div>
         );
     }
